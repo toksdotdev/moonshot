@@ -1,5 +1,5 @@
 use self::color::ColorPalette;
-use crate::vga::{buffer::Buffer, color::Color, writer::Writer};
+use crate::vga::writer::Writer;
 use core::fmt;
 use lazy_static::lazy_static;
 use spin::Mutex;
@@ -10,11 +10,7 @@ mod color;
 mod writer;
 
 lazy_static! {
-    static ref WRITER: Mutex<Writer> = Mutex::new(Writer {
-        column_position: 0,
-        color_palette: ColorPalette::new(Color::Yellow, Color::Black),
-        buffer: unsafe { &mut *(0xb8000 as *mut Buffer) },
-    });
+    static ref WRITER: Mutex<Writer> = Mutex::new(Writer::default());
 }
 
 #[macro_export]
