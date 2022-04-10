@@ -1,6 +1,6 @@
 use super::{
     buffer::{Buffer, BUFFER_HEIGHT, BUFFER_WIDTH},
-    character::ScreenChar,
+    character::ColoredCharacter,
     color::{Color, ColorPalette},
 };
 use core::fmt;
@@ -38,7 +38,7 @@ impl Writer {
                 }
 
                 let (row, col) = (BUFFER_HEIGHT - 1, self.column_position);
-                self.buffer.chars[row][col].write(ScreenChar {
+                self.buffer.chars[row][col].write(ColoredCharacter {
                     color_palette: self.color_palette,
                     ascii_character: byte,
                 });
@@ -61,7 +61,7 @@ impl Writer {
     }
 
     fn clear_row(&mut self, row: usize) {
-        let blank = ScreenChar {
+        let blank = ColoredCharacter {
             ascii_character: b' ',
             color_palette: self.color_palette,
         };
