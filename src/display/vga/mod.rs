@@ -10,7 +10,7 @@ mod color;
 mod writer;
 
 lazy_static! {
-    static ref WRITER: Mutex<Writer> = Mutex::new(Writer::default());
+    static ref VGA_DISPLAY: Mutex<Writer> = Mutex::new(Writer::default());
 }
 
 #[macro_export]
@@ -27,13 +27,13 @@ macro_rules! println {
 #[doc(hidden)]
 pub fn _print(args: fmt::Arguments) {
     use fmt::Write;
-    WRITER.lock().write_fmt(args).unwrap()
+    VGA_DISPLAY.lock().write_fmt(args).unwrap()
 }
 
 #[doc(hidden)]
 pub fn _eprint(args: fmt::Arguments) {
     use fmt::Write;
-    let mut writer = WRITER.lock();
+    let mut writer = VGA_DISPLAY.lock();
     writer.set_color_palette(ColorPalette::error());
     writer.write_fmt(args).unwrap();
     writer.reset_color();
