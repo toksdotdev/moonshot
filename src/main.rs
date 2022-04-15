@@ -2,6 +2,7 @@
 #![no_main]
 
 mod display;
+mod serial;
 use self::display::vga;
 use core::panic::PanicInfo;
 

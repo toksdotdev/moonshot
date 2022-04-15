@@ -13,3 +13,14 @@ bootloader = "0.9.22"
 lazy_static = { version = "1.4.0", features = ["spin_no_std"] }
 spin = "0.8.0"
 volatile = "0.4.4"
+x86_64 = "0.14.9"
+uart_16550 = "0.2.0"
+
+[package.metadata.bootimage]
+test-timeout = 120          # (in seconds)
+test-success-exit-code = 33 # (0x10 << 1) | 1
+test-args = [
+    "-device", "isa-debug-exit,iobase=0xf4,iosize=0x04", 
+    "-serial", "stdio",
+    "-display", "none"
+]
