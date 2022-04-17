@@ -1,16 +1,12 @@
 #![no_std]
 #![no_main]
 #![feature(custom_test_frameworks)]
-#![test_runner(crate::testing::test_runner)]
+#![test_runner(moonshot::testing::test_runner)]
 #![reexport_test_harness_main = "test_main"]
 
-mod display;
-mod exit;
-mod serial;
-#[cfg(test)]
-mod testing;
-
-use self::display::vga;
+#[cfg(not(test))]
+use moonshot::eprintln;
+use moonshot::println;
 
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
@@ -27,4 +23,10 @@ pub extern "C" fn _start() -> ! {
 fn panic(info: &core::panic::PanicInfo) -> ! {
     eprintln!("{}", info);
     loop {}
+}
+
+#[cfg(test)]
+#[panic_handler]
+fn panic(info: &core::panic::PanicInfo) -> ! {
+    moonshot::testing::panic_handler(info);
 }
