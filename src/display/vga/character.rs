@@ -1,4 +1,5 @@
-use core::ops::{Deref, DerefMut};
+use core::ops::Deref;
+use core::ops::DerefMut;
 
 use super::color::ColorPalette;
 

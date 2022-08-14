@@ -56,7 +56,8 @@ macro_rules! eprintln {
 
 #[cfg(test)]
 mod tests {
-    use crate::display::vga::{buffer::BUFFER_HEIGHT, VGA_DISPLAY};
+    use crate::display::vga::buffer::BUFFER_HEIGHT;
+    use crate::display::vga::VGA_DISPLAY;
 
     #[test_case]
     fn test_println_doesnt_panic() {

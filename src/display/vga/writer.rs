@@ -1,8 +1,9 @@
-use super::{
-    buffer::{Buffer, BUFFER_HEIGHT, BUFFER_WIDTH},
-    character::ColoredCharacter,
-    color::{Color, ColorPalette},
-};
+use super::buffer::Buffer;
+use super::buffer::BUFFER_HEIGHT;
+use super::buffer::BUFFER_WIDTH;
+use super::character::ColoredCharacter;
+use super::color::Color;
+use super::color::ColorPalette;
 use core::fmt;
 
 pub struct Writer {

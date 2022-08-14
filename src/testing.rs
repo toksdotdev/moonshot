@@ -1,5 +1,7 @@
-use crate::exit::{exit_qemu, QemuExitCode};
-use crate::{serial_print, serial_println};
+use crate::exit::exit_qemu;
+use crate::exit::QemuExitCode;
+use crate::serial_print;
+use crate::serial_println;
 
 pub trait Testable {
     fn run(&self) -> ();
