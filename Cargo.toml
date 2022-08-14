@@ -24,3 +24,8 @@ test-args = [
     "-serial", "stdio",
     "-display", "none"
 ]
+
+
+[[test]]
+name = "stack_overflow"
+harness = false

@@ -4,13 +4,12 @@
 #![test_runner(moonshot::testing::test_runner)]
 #![reexport_test_harness_main = "test_main"]
 
-#[cfg(not(test))]
-use moonshot::eprintln;
 use moonshot::println;
 
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
     println!("Dispay up!");
+    moonshot::initialize();
 
     #[cfg(test)]
     test_main();
@@ -21,6 +20,8 @@ pub extern "C" fn _start() -> ! {
 #[cfg(not(test))]
 #[panic_handler]
 fn panic(info: &core::panic::PanicInfo) -> ! {
+    use moonshot::eprintln;
+
     eprintln!("{}", info);
     loop {}
 }

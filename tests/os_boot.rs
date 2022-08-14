@@ -6,7 +6,7 @@
 
 use core::panic::PanicInfo;
 
-use moonshot::{println, testing::panic_handler};
+use moonshot::println;
 
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
@@ -16,7 +16,7 @@ pub extern "C" fn _start() -> ! {
 
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
-    panic_handler(info);
+    moonshot::testing::panic_handler(info);
 }
 
 #[test_case]
