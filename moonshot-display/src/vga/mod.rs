@@ -27,16 +27,22 @@ macro_rules! println {
 #[doc(hidden)]
 pub fn _print(args: fmt::Arguments) {
     use fmt::Write;
-    VGA_DISPLAY.lock().write_fmt(args).unwrap()
+    use x86_64::instructions::interrupts;
+
+    interrupts::without_interrupts(|| VGA_DISPLAY.lock().write_fmt(args).unwrap());
 }
 
 #[doc(hidden)]
 pub fn _eprint(args: fmt::Arguments) {
     use fmt::Write;
-    let mut writer = VGA_DISPLAY.lock();
-    writer.set_color_palette(ColorPalette::error());
-    writer.write_fmt(args).unwrap();
-    writer.reset_color();
+    use x86_64::instructions::interrupts;
+
+    interrupts::without_interrupts(|| {
+        let mut writer = VGA_DISPLAY.lock();
+        writer.set_color_palette(ColorPalette::error());
+        writer.write_fmt(args).unwrap();
+        writer.reset_color();
+    });
 }
 
 #[macro_export]

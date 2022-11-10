@@ -68,6 +68,7 @@ dependencies = [
  "moonshot-shared",
  "spin 0.9.4",
  "volatile",
+ "x86_64",
 ]
 
 [[package]]

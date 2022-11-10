@@ -1,10 +1,16 @@
+mod handlers;
+mod index;
+
 use crate::gdt;
+use crate::interrupts::handlers::breakpoint_handler;
+use crate::interrupts::handlers::double_fault_handler;
+use crate::interrupts::handlers::timer_interrupt_handler;
+use crate::interrupts::index::InterruptIndex;
+
 use lazy_static::lazy_static;
-use moonshot_display::println;
 use pic8259::ChainedPics;
 use spin::Mutex;
 use x86_64::structures::idt::InterruptDescriptorTable;
-use x86_64::structures::idt::InterruptStackFrame;
 
 const PIC_1_OFFSET: u8 = 32;
 const PIC_2_OFFSET: u8 = PIC_1_OFFSET + 8;
@@ -15,6 +21,8 @@ lazy_static! {
     static ref IDT: InterruptDescriptorTable = {
         let mut idt = InterruptDescriptorTable::new();
         idt.breakpoint.set_handler_fn(breakpoint_handler);
+        idt[InterruptIndex::Timer.as_usize()].set_handler_fn(timer_interrupt_handler);
+
         unsafe {
             idt.double_fault
                 .set_handler_fn(double_fault_handler)
@@ -32,17 +40,6 @@ pub fn initialize_pics() {
     unsafe {
         PICS.lock().initialize();
     }
-}
-
-extern "x86-interrupt" fn breakpoint_handler(stack_frame: InterruptStackFrame) {
-    println!("EXCEPTION: BREAKPOINT\n{:#?}", stack_frame);
-}
-
-extern "x86-interrupt" fn double_fault_handler(
-    stack_frame: InterruptStackFrame,
-    _error_code: u64,
-) -> ! {
-    panic!("EXCEPTION: DOUBLE FAULT\n{:#?}", stack_frame);
 }
 
 #[test_case]

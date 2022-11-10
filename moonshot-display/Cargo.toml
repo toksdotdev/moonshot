@@ -11,6 +11,7 @@ default = ["vga"]
 moonshot-shared = { path = "../moonshot-shared", version = "*" }
 lazy_static = { workspace = true, features = ["spin_no_std"] }
 volatile = { workspace = true }
+x86_64 = { workspace = true }
 spin = { workspace = true }
 
 [dev-dependencies]
