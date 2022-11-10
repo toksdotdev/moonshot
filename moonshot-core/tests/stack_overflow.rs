@@ -5,10 +5,12 @@
 use core::panic::PanicInfo;
 use lazy_static::lazy_static;
 
-use moonshot::exit::exit_qemu;
-use moonshot::exit::QemuExitCode;
-use moonshot::serial_print;
-use moonshot::serial_println;
+use moonshot_core::gdt;
+use moonshot_shared::exit::exit_qemu;
+use moonshot_shared::exit::QemuExitCode;
+use moonshot_shared::serial_print;
+use moonshot_shared::serial_println;
+use moonshot_shared::testing;
 use x86_64::structures::idt::InterruptDescriptorTable;
 use x86_64::structures::idt::InterruptStackFrame;
 
@@ -18,14 +20,14 @@ lazy_static! {
         unsafe {
             idt.double_fault
                 .set_handler_fn(test_double_fault_handler)
-                .set_stack_index(moonshot::gdt::DOUBLE_FAULT_IST_INDEX);
+                .set_stack_index(gdt::DOUBLE_FAULT_IST_INDEX);
         }
 
         idt
     };
 }
 
-pub fn init_test_idt() {
+pub fn initialize_test_idt() {
     TEST_IDT.load();
 }
 
@@ -33,8 +35,8 @@ pub fn init_test_idt() {
 pub extern "C" fn _start() -> ! {
     serial_print!("stack_overflow::stack_overflow...\t");
 
-    moonshot::gdt::initialize();
-    init_test_idt();
+    gdt::initialize();
+    initialize_test_idt();
     stack_overflow();
 
     panic!("Execution continued after stack overflow");
@@ -49,7 +51,7 @@ fn stack_overflow() {
 
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
-    moonshot::testing::panic_handler(info)
+    testing::panic_handler(info)
 }
 
 extern "x86-interrupt" fn test_double_fault_handler(

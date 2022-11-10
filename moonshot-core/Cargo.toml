@@ -1,0 +1,27 @@
+[package]
+name = "moonshot-core"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+moonshot-display = { path = "../moonshot-display", version = "*", features = ["vga"] }
+moonshot-shared = { path = "../moonshot-shared", version = "*"}
+lazy_static = { workspace = true }
+x86_64 = { workspace = true }
+
+[dev-dependencies]
+volatile = { workspace = true }
+bootloader = { workspace = true }
+
+[package.metadata.bootimage]
+test-timeout = 120          # (in seconds)
+test-success-exit-code = 33 # (0x10 << 1) | 1
+test-args = [
+    "-device", "isa-debug-exit,iobase=0xf4,iosize=0x04", 
+    "-serial", "stdio",
+    "-display", "none"
+]
+
+[[test]]
+name = "stack_overflow"
+harness = false

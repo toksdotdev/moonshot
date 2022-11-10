@@ -1,5 +1,5 @@
 use self::color::ColorPalette;
-use crate::display::vga::writer::Writer;
+use crate::vga::writer::Writer;
 use core::fmt;
 use lazy_static::lazy_static;
 use spin::Mutex;
@@ -15,7 +15,7 @@ lazy_static! {
 
 #[macro_export]
 macro_rules! print {
-    ($($arg:tt)*) => ($crate::display::vga::_print(format_args!($($arg)*)));
+    ($($arg:tt)*) => ($crate::vga::_print(format_args!($($arg)*)));
 }
 
 #[macro_export]
@@ -42,7 +42,7 @@ pub fn _eprint(args: fmt::Arguments) {
 #[macro_export]
 macro_rules! eprint {
     ($($arg:tt)*) => {
-        $crate::display::vga::_eprint(format_args!($($arg)*));
+        $crate::vga::_eprint(format_args!($($arg)*));
     };
 }
 
@@ -56,8 +56,8 @@ macro_rules! eprintln {
 
 #[cfg(test)]
 mod tests {
-    use crate::display::vga::buffer::BUFFER_HEIGHT;
-    use crate::display::vga::VGA_DISPLAY;
+    use crate::vga::buffer::BUFFER_HEIGHT;
+    use crate::vga::VGA_DISPLAY;
 
     #[test_case]
     fn test_println_doesnt_panic() {

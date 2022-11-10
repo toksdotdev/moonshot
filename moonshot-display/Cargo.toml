@@ -1,0 +1,26 @@
+[package]
+name = "moonshot-display"
+version = "0.0.0"
+edition = "2021"
+
+[features]
+vga = []
+default = ["vga"]
+
+[dependencies]
+moonshot-shared = { path = "../moonshot-shared", version = "*" }
+lazy_static = { workspace = true, features = ["spin_no_std"] }
+volatile = { workspace = true }
+spin = { workspace = true }
+
+[dev-dependencies]
+bootloader = { workspace = true }
+
+[package.metadata.bootimage]
+test-timeout = 120          # (in seconds)
+test-success-exit-code = 33 # (0x10 << 1) | 1
+test-args = [
+    "-device", "isa-debug-exit,iobase=0xf4,iosize=0x04", 
+    "-serial", "stdio",
+    "-display", "none"
+]

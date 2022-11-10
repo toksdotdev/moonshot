@@ -1,0 +1,15 @@
+[package]
+name = "moonshot-shared"
+version = "0.0.0"
+edition = "2021"
+
+[lib]
+name = "moonshot_shared"
+test = false
+bench = false
+
+[dependencies]
+lazy_static = { workspace = true, features = ["spin_no_std"] }
+x86_64 = { workspace = true }
+spin = { workspace = true }
+uart_16550 = "0.2.0"

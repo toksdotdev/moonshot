@@ -46,14 +46,35 @@ dependencies = [
 ]
 
 [[package]]
-name = "moonshot"
+name = "moonshot-core"
 version = "0.1.0"
 dependencies = [
  "bootloader",
  "lazy_static",
+ "moonshot-display",
+ "moonshot-shared",
+ "volatile",
+ "x86_64",
+]
+
+[[package]]
+name = "moonshot-display"
+version = "0.0.0"
+dependencies = [
+ "bootloader",
+ "lazy_static",
+ "moonshot-shared",
+ "spin 0.9.4",
+ "volatile",
+]
+
+[[package]]
+name = "moonshot-shared"
+version = "0.0.0"
+dependencies = [
+ "lazy_static",
  "spin 0.9.4",
  "uart_16550",
- "volatile",
  "x86_64",
 ]
 

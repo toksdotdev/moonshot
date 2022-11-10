@@ -2,6 +2,7 @@ use crate::exit::exit_qemu;
 use crate::exit::QemuExitCode;
 use crate::serial_print;
 use crate::serial_println;
+use core::ops::Fn;
 
 pub trait Testable {
     fn run(&self) -> ();

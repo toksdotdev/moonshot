@@ -1,8 +1,6 @@
 use crate::gdt;
-use crate::println;
 use lazy_static::lazy_static;
-#[cfg(test)]
-use x86_64::instructions::interrupts;
+use moonshot_display::println;
 use x86_64::structures::idt::InterruptDescriptorTable;
 use x86_64::structures::idt::InterruptStackFrame;
 
@@ -36,5 +34,5 @@ extern "x86-interrupt" fn double_fault_handler(
 
 #[test_case]
 fn test_breakpoint_exception() {
-    interrupts::int3();
+    x86_64::instructions::interrupts::int3();
 }

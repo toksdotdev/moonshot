@@ -2,11 +2,11 @@
 #![no_main]
 #![feature(custom_test_frameworks)]
 #![reexport_test_harness_main = "test_main"]
-#![test_runner(moonshot::testing::test_runner)]
+#![test_runner(moonshot_shared::testing::test_runner)]
 
 use core::panic::PanicInfo;
-
-use moonshot::println;
+use moonshot_display::println;
+use moonshot_shared::testing;
 
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
@@ -16,7 +16,7 @@ pub extern "C" fn _start() -> ! {
 
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
-    moonshot::testing::panic_handler(info);
+    testing::panic_handler(info);
 }
 
 #[test_case]
