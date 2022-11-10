@@ -5,6 +5,7 @@
 #![reexport_test_harness_main = "test_main"]
 
 use moonshot_display::println;
+use moonshot_shared::instruction;
 
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
@@ -14,14 +15,14 @@ pub extern "C" fn _start() -> ! {
     #[cfg(test)]
     test_main();
 
-    loop {}
+    instruction::hlt_loop();
 }
 
 #[cfg(not(test))]
 #[panic_handler]
 fn panic(info: &core::panic::PanicInfo) -> ! {
     moonshot_display::eprintln!("{}", info);
-    loop {}
+    instruction::hlt_loop();
 }
 
 #[cfg(test)]

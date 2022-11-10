@@ -8,6 +8,8 @@ moonshot-display = { path = "../moonshot-display", version = "*", features = ["v
 moonshot-shared = { path = "../moonshot-shared", version = "*"}
 lazy_static = { workspace = true }
 x86_64 = { workspace = true }
+spin = { workspace = true }
+pic8259 = "0.10.2"
 
 [dev-dependencies]
 volatile = { workspace = true }

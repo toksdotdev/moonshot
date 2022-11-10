@@ -6,6 +6,7 @@
 #![reexport_test_harness_main = "test_main"]
 
 pub mod exit;
+pub mod instruction;
 pub mod serial;
 pub mod testing;
 

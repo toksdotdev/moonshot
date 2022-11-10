@@ -1,8 +1,15 @@
 use crate::gdt;
 use lazy_static::lazy_static;
 use moonshot_display::println;
+use pic8259::ChainedPics;
+use spin::Mutex;
 use x86_64::structures::idt::InterruptDescriptorTable;
 use x86_64::structures::idt::InterruptStackFrame;
+
+const PIC_1_OFFSET: u8 = 32;
+const PIC_2_OFFSET: u8 = PIC_1_OFFSET + 8;
+static PICS: Mutex<ChainedPics> =
+    Mutex::new(unsafe { ChainedPics::new(PIC_1_OFFSET, PIC_2_OFFSET) });
 
 lazy_static! {
     static ref IDT: InterruptDescriptorTable = {
@@ -19,6 +26,12 @@ lazy_static! {
 
 pub fn initialize_idt() {
     IDT.load();
+}
+
+pub fn initialize_pics() {
+    unsafe {
+        PICS.lock().initialize();
+    }
 }
 
 extern "x86-interrupt" fn breakpoint_handler(stack_frame: InterruptStackFrame) {

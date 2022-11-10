@@ -11,6 +11,8 @@ pub mod interrupts;
 pub fn initialize() {
     gdt::initialize();
     interrupts::initialize_idt();
+    interrupts::initialize_pics();
+    x86_64::instructions::interrupts::enable();
 }
 
 #[cfg(test)]
@@ -18,7 +20,7 @@ pub fn initialize() {
 pub extern "C" fn _start() -> ! {
     initialize();
     test_main();
-    loop {}
+    moonshot_shared::instruction::hlt_loop();
 }
 
 #[cfg(test)]

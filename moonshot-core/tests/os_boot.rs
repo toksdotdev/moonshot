@@ -11,7 +11,7 @@ use moonshot_shared::testing;
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
     test_main();
-    loop {}
+    moonshot_shared::instruction::hlt_loop();
 }
 
 #[panic_handler]
