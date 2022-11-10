@@ -53,6 +53,7 @@ dependencies = [
  "lazy_static",
  "moonshot-display",
  "moonshot-shared",
+ "pc-keyboard",
  "pic8259",
  "spin 0.9.4",
  "volatile",
@@ -80,6 +81,12 @@ dependencies = [
  "uart_16550",
  "x86_64",
 ]
+
+[[package]]
+name = "pc-keyboard"
+version = "0.6.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e0ad9805165d0672a3efa682cac952870d8b05d98e02e08063ca7db597005338"
 
 [[package]]
 name = "pic8259"

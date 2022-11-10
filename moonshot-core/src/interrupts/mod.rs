@@ -4,6 +4,7 @@ mod index;
 use crate::gdt;
 use crate::interrupts::handlers::breakpoint_handler;
 use crate::interrupts::handlers::double_fault_handler;
+use crate::interrupts::handlers::keyboard_interrupt_handler;
 use crate::interrupts::handlers::timer_interrupt_handler;
 use crate::interrupts::index::InterruptIndex;
 
@@ -22,6 +23,7 @@ lazy_static! {
         let mut idt = InterruptDescriptorTable::new();
         idt.breakpoint.set_handler_fn(breakpoint_handler);
         idt[InterruptIndex::Timer.as_usize()].set_handler_fn(timer_interrupt_handler);
+        idt[InterruptIndex::Keyboard.as_usize()].set_handler_fn(keyboard_interrupt_handler);
 
         unsafe {
             idt.double_fault
